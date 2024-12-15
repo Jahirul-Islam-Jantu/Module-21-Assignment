@@ -15,7 +15,6 @@ export const UserRegistratonService = async (req)=>{
 export const UserLogInService = async (req)=>{
     try{
         let reqBody = req.body
-        console.log(reqBody)
         let user = await UserModel.findOne({phoneNumber:reqBody.phoneNumber})
         if (user){
             const token = EncodeToken(user.phoneNumber, user._id)
