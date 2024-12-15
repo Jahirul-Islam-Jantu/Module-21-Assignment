@@ -1,8 +1,8 @@
 import {
     SingleProfileService,
-    UserLogInService,
+    UserLogInService, UserProfileDeleteService,
     UserRegistratonService,
-    UsersProfileService
+    UsersProfileService, UsersProfileUpdateService
 } from "../service/UserService.js";
 
 export const UserRegistration = async (req, res)=>{
@@ -22,4 +22,12 @@ export const GetAllUsers = async (req, res) => {
 export const GetSingleProfile = async (req, res) => {
     let result = await SingleProfileService(req)
     return res.status(200).json({result})
+}
+export const UserProfileUpdate = async (req, res) => {
+    let result = await UsersProfileUpdateService(req)
+    return res.status(200).json({result})
+}
+export const DeleteSingleUser = async (req, res) => {
+    await UserProfileDeleteService(req)
+    return res.status(200).json({message: "User Deleted"})
 }

@@ -4,10 +4,13 @@ import * as UserController from "../app/controller/UserController.js"
 import {UserAuthMiddleware} from "../app/middleware/UserAuthMiddleware.js";
 
 
+
 router.post("/UserRegistration", UserController.UserRegistration)
 router.post('/UserLogIn', UserController.UserLogIn)
 router.get("/GetAllUsers", UserController.GetAllUsers)
-router.get("/GetSingleProfile/:phone",UserAuthMiddleware ,UserController.GetSingleProfile)
+router.get("/GetSingleProfile",UserAuthMiddleware ,UserController.GetSingleProfile)
+router.post("/UserProfileUpdate",UserAuthMiddleware ,UserController.UserProfileUpdate)
+router.delete("/DeleteSingleUser/:_id",UserAuthMiddleware ,UserController.DeleteSingleUser)
 
 
 

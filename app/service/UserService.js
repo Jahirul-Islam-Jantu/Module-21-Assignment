@@ -48,22 +48,26 @@ export const UsersProfileService = async ()=>{
         return ({status:"error",error:error})
     }
 }
-//
-// export const UsersProfileUpdateService = async ()=>{
-//     try{
-//         let data = await BrandModel.find()
-//         return ({status:"Success", data:data})
-//     }catch(error){
-//         return ({status:"error",error:error})
-//     }
-// }
-//
-// export const UserProfileDeleteService = async ()=>{
-//     try{
-//         let data = await BrandModel.find()
-//         return ({status:"Success", data:data})
-//     }catch(error){
-//         return ({status:"error",error:error})
-//     }
-// }
+
+export const UsersProfileUpdateService = async (req)=>{
+    try{
+        let reqBody = req.body
+        let phone = req.headers["phoneNumber"]
+        let updatedUser = await UserModel.updateOne({phoneNumber:phone}, reqBody)
+
+        return ({status:"Success", user:updatedUser})
+    }catch(error){
+        return ({status:"error",error:error})
+    }
+}
+
+export const UserProfileDeleteService = async (req)=>{
+    try{
+        let id = req.params._id
+        await UserModel.deleteOne({_id:id})
+        return ({status:"Success", message:"Succesfully deleted"})
+    }catch(error){
+        return ({status:"error",error:error})
+    }
+}
 
