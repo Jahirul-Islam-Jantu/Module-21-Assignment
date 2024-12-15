@@ -3,7 +3,7 @@ import {JWT_SECRET, JWT_EXPIRATION_TIME} from "../config/config.js";
 
 
 export const EncodeToken = (phoneNumber, user_id) => {
-    const KEY = JWT_Secret
+    const KEY = JWT_SECRET
     const EXPIRE = {expiresIn: JWT_EXPIRATION_TIME}
     const PAYLOAD = {phoneNumber: phoneNumber, user_id: user_id}
     return jwt.sign(PAYLOAD, KEY, EXPIRE)

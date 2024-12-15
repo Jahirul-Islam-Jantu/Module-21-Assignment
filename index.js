@@ -20,6 +20,7 @@ const app = express();
 
 // configure global middlewares
 app.use(cors())
+app.use(express.json())
 app.use(express.json({limit:MAX_JSON_SIZE}))
 app.use(express.urlencoded({extended:URL_ENCODED}))
 app.use(hpp())

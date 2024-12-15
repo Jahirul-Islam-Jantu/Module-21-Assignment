@@ -15,9 +15,10 @@ export const UserRegistratonService = async (req)=>{
 export const UserLogInService = async (req)=>{
     try{
         let reqBody = req.body
-        let user = await UserModel.find(reqBody)
+        console.log(reqBody)
+        let user = await UserModel.findOne({phoneNumber:reqBody.phoneNumber})
         if (user){
-            const token = EncodeToken(user[0].phoneNumber, user[0]._id)
+            const token = EncodeToken(user.phoneNumber, user._id)
             return ({status:"Success", user:user, token:token})
         }
         else{
@@ -28,10 +29,12 @@ export const UserLogInService = async (req)=>{
     }
 }
 
-export const SingleProfileService = async ()=>{
+export const SingleProfileService = async (req)=>{
     try{
-        let data = await BrandModel.find()
-        return ({status:"Success", data:data})
+        let id = req.headers._id
+        let phoneNumber = req.headers.phoneNumber
+        let user = await UserModel.findOne({phoneNumber:phoneNumber, id:id})
+        return ({status:"Success", user:user})
     }catch(error){
         return ({status:"error",error:error})
     }
@@ -39,28 +42,28 @@ export const SingleProfileService = async ()=>{
 
 export const UsersProfileService = async ()=>{
     try{
-        let data = await BrandModel.find()
-        return ({status:"Success", data:data})
+        let users = await UserModel.find()
+        return ({status:"Success", users:users})
     }catch(error){
         return ({status:"error",error:error})
     }
 }
-
-export const UsersProfileUpdateService = async ()=>{
-    try{
-        let data = await BrandModel.find()
-        return ({status:"Success", data:data})
-    }catch(error){
-        return ({status:"error",error:error})
-    }
-}
-
-export const UserProfileDeleteService = async ()=>{
-    try{
-        let data = await BrandModel.find()
-        return ({status:"Success", data:data})
-    }catch(error){
-        return ({status:"error",error:error})
-    }
-}
+//
+// export const UsersProfileUpdateService = async ()=>{
+//     try{
+//         let data = await BrandModel.find()
+//         return ({status:"Success", data:data})
+//     }catch(error){
+//         return ({status:"error",error:error})
+//     }
+// }
+//
+// export const UserProfileDeleteService = async ()=>{
+//     try{
+//         let data = await BrandModel.find()
+//         return ({status:"Success", data:data})
+//     }catch(error){
+//         return ({status:"error",error:error})
+//     }
+// }
 
