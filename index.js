@@ -14,6 +14,9 @@ import {
 
 } from "./app/config/config.js";
 import router from "./routes/api.js";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 // crete an app instance
 const app = express();

@@ -11,9 +11,18 @@ export const UserRegistration = async (req, res)=>{
 }
 
 export const UserLogIn = async (req, res) => {
-    let result = await UserLogInService(req)
-    return res.status(200).json({result:result})
-}
+    let result = await UserLogInService(req);
+    if (result.status === "Success") {
+
+        res.cookie("authToken", result.token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+        });
+    }
+    return res.status(200).json({ result });
+};
 
 export const GetAllUsers = async (req, res) => {
     let result = await UsersProfileService()
@@ -28,6 +37,10 @@ export const UserProfileUpdate = async (req, res) => {
     return res.status(200).json({result})
 }
 export const DeleteSingleUser = async (req, res) => {
-    await UserProfileDeleteService(req)
-    return res.status(200).json({message: "User Deleted"})
-}
+    const result = await UserProfileDeleteService(req);
+    if (result.status === "Success") {
+        return res.status(200).json(result);
+    } else {
+        return res.status(400).json(result); // Return 400 for failures
+    }
+};
